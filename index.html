@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tax MD — Full Proposal and Price Breakdown</title>
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1E45; --navy-2:#132B5C; --ink:#0F1E3D; --ink-2:#2A3A5C; --muted:#56637B;
+  --blue:#1D5FD1; --blue-deep:#123F92; --blue-2:#4F86E8; --blue-3:#A9C4F5; --sky:#8DB8FF;
+  --wash:#EEF3FC; --wash-2:#F6F9FE; --rule:#DCE3EF;
+  --amber:#F2B544; --amber-wash:#FDF3DD; --green:#1C8A5A; --green-wash:#E3F4EA;
+  --e:cubic-bezier(.2,.75,.2,1);
+  color-scheme:light; box-sizing:border-box;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px)}
+body{margin:0;background:#FFFFFF;color:var(--ink);
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15}
+p{margin:0 0 12px}
+a{color:var(--blue)}
+button{font:inherit;color:inherit}
+:is(a,button,input,summary):focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:6px}
+mark{color:#0B2A6B;background:#CFE0FF;padding:0 .2em;border-radius:3px}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+
+/* motion primitives */
+@keyframes up{from{opacity:0;transform:translateY(12px)}}
+@keyframes down{from{opacity:0;transform:translateY(-26px)}}
+@keyframes pop{from{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.12)}}
+@keyframes grow{from{transform:scaleY(0)}}
+@keyframes widen{from{transform:scaleX(0)}}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)}}
+@keyframes scan{0%{top:6%;opacity:1}85%{top:92%;opacity:1}100%{top:92%;opacity:0}}
+@keyframes flash{0%,100%{opacity:0}25%{opacity:.95}}
+@keyframes stamp{from{opacity:0;transform:scale(2.4) rotate(-16deg)}70%{opacity:1;transform:scale(.94) rotate(-9deg)}to{transform:rotate(-9deg)}}
+@keyframes press{0%{background:var(--blue);transform:none}35%{background:var(--blue);transform:scale(.88)}100%{background:var(--green);transform:none}}
+@keyframes pick{from{background:#fff;border-color:var(--rule);color:var(--ink);transform:none}50%{transform:scale(1.06)}}
+@keyframes drop{from{opacity:0;transform:translateY(-70px) rotate(-8deg)}70%{opacity:1;transform:translateY(4px) rotate(0)}}
+@keyframes ripple{from{transform:scale(0);opacity:.55}to{transform:scale(3.2);opacity:0}}
+@keyframes ring{from{box-shadow:0 0 0 0 rgba(29,95,209,.45)}to{box-shadow:0 0 0 16px rgba(29,95,209,0)}}
+@keyframes toast{0%,10%{opacity:0;transform:translateY(-14px)}16%,72%{opacity:1;transform:none}80%,100%{opacity:0;transform:translateY(-14px)}}
+@keyframes timer{from{transform:scaleX(0)}}
+@keyframes swap{from{opacity:0;transform:translateY(8px)}}
+.a-up{animation:up .5s var(--e) var(--d,0s) both}
+.a-down{animation:down .55s var(--e) var(--d,0s) both}
+.a-pop{animation:pop .45s var(--e) var(--d,0s) both}
+.a-grow{transform-origin:bottom;animation:grow .7s var(--e) var(--d,0s) both}
+.a-widen{transform-origin:left;animation:widen .7s var(--e) var(--d,0s) both}
+.swap{animation:swap .4s var(--e) both}
+
+/* reveal on scroll */
+.js [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .8s var(--e),transform .8s var(--e)}
+.js [data-reveal].in{opacity:1;transform:none}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);padding-top:env(safe-area-inset-top,0px)}
+.topbar-in{max-width:1240px;margin:0 auto;padding:12px 32px;display:flex;align-items:center;gap:16px}
+.brand{font-weight:800;text-decoration:none;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:9px}
+.brand i{width:26px;height:26px;border-radius:8px;background:var(--blue);display:grid;place-items:center;color:#fff;font-style:normal;font-size:.72rem;font-weight:800}
+.now{flex:1;min-width:0;color:var(--muted);font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.now b{color:var(--ink);font-weight:700}
+.progress{height:3px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue-2))}
+.tb-btn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:#fff;border-radius:999px;padding:7px 14px;font-size:.86rem;font-weight:700;cursor:pointer;transition:border-color .2s,color .2s}
+.tb-btn:hover{border-color:var(--blue);color:var(--blue)}
+.tb-contents{display:none}
+.drawer{border-top:1px solid var(--rule);background:#fff}
+.drawer ol{list-style:none;margin:0 auto;padding:10px 22px 16px;max-width:1240px;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px}
+.drawer a{display:block;padding:8px 0;text-decoration:none;color:var(--ink);font-weight:600}
+.drawer a span{color:var(--blue);margin-right:8px;font-weight:800}
+
+/* ---------- hero ---------- */
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(600px 380px at 85% 30%,rgba(79,134,232,.35),transparent 70%),
+  linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px) 0 0/100% 44px;pointer-events:none}
+.hero-in{position:relative;max-width:1240px;margin:0 auto;padding:72px 32px 76px;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:64px;align-items:center}
+.ld{animation:up .8s var(--e) var(--d,0s) both}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600;color:var(--sky);margin-bottom:18px}
+.kicker i{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.hero h1{font-size:clamp(2.3rem,5.2vw,3.6rem);font-weight:800;line-height:1.04;letter-spacing:-.035em;max-width:15ch}
+.lede{font-size:1.14rem;max-width:56ch;color:#C9D6EE;margin-top:20px}
+.facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;margin:30px 0 32px;gap:0}
+.facts div{padding:0 30px 0 0;margin-right:30px;border-right:1px solid rgba(255,255,255,.16)}
+.facts div:last-child{border-right:0;margin-right:0}
+.facts span{display:block;color:#93A6CB;font-size:.84rem;font-weight:600}
+.facts strong{display:block;font-size:1.5rem;line-height:1.3;font-weight:800}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.95rem;padding:12px 22px;border-radius:999px;border:1.5px solid var(--blue);background:var(--blue);color:#fff;cursor:pointer;text-decoration:none;line-height:1.2;transition:transform .2s var(--e),background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--blue-deep);border-color:var(--blue-deep)}
+.btn svg{width:16px;height:16px;flex:none}
+.hero .btn{background:#fff;color:var(--navy);border-color:#fff}
+.hero .btn:hover{background:#E6EEFC}
+.hero .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.hero .btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+.hint{font-size:.86rem;color:#93A6CB;margin-top:18px}
+.hero .term{color:#fff;text-decoration-color:var(--amber)}
+
+/* phone sketch */
+.phone{width:262px;margin-left:auto;border-radius:42px;background:#050E22;padding:10px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08)}
+.screen{background:#fff;color:var(--ink);border-radius:33px;padding:30px 16px 20px;min-height:470px;position:relative;font-size:12.5px;line-height:1.4;overflow:hidden}
+.screen::before{content:"";position:absolute;top:10px;left:50%;width:66px;height:7px;margin-left:-33px;border-radius:9px;background:#E3E8F1}
+.scr-hi{color:var(--muted)}
+.scr-name{font-weight:800;font-size:17px;margin-bottom:12px}
+.scr-due{background:var(--amber-wash);border-radius:14px;padding:10px 12px;margin-bottom:12px}
+.scr-due small{display:block;color:#7A5A12;font-weight:700}
+.scr-due b{font-size:14px}
+.scr-up{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--blue);color:#fff;border-radius:18px;padding:24px 10px;font-weight:800;font-size:15px;margin-bottom:12px;animation:ring 2.4s ease-out infinite}
+.scr-up svg{width:30px;height:30px}
+.scr-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.scr-tiles div{background:var(--wash-2);border:1px solid var(--rule);border-radius:12px;padding:8px 10px}
+.scr-tiles small{display:block;color:var(--muted);font-size:10.5px}
+.scr-tiles b{font-size:15px}
+.scr-miss{display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--ink-2)}
+.scr-miss i{width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none}
+.toast{position:absolute;left:10px;right:10px;top:26px;background:var(--ink);color:#fff;border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:11.5px;animation:toast 6s var(--e) 1.6s infinite both;box-shadow:0 12px 24px -10px rgba(0,0,0,.4)}
+.toast span{width:26px;height:26px;border-radius:8px;background:var(--green);display:grid;place-items:center;flex:none}
+.toast svg{width:14px;height:14px}
+.toast b{display:block;font-size:12px}
+.phone-cap{text-align:center;font-size:.8rem;color:#93A6CB;margin-top:12px;margin-left:auto;width:262px}
+
+/* ---------- layout ---------- */
+.shell{max-width:1240px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:64px}
+.rail{position:sticky;top:96px;padding-top:56px}
+.rail p{font-size:.85rem;color:var(--muted);margin:0 0 10px;font-weight:700}
+.rail ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--rule)}
+.rail a{display:flex;gap:10px;padding:7px 0 7px 16px;margin-left:-2px;border-left:2px solid transparent;text-decoration:none;color:var(--muted);font-size:.9rem;line-height:1.35;font-weight:500;transition:color .25s,border-color .25s}
+.rail a span{font-weight:800;min-width:1.1em}
+.rail a:hover{color:var(--ink)}
+.rail a.on{color:var(--blue);border-left-color:var(--blue);font-weight:700}
+.rail a.seen:not(.on){color:var(--ink-2)}
+main{min-width:0;padding-bottom:72px}
+
+/* ---------- chapters ---------- */
+.chapter{padding:64px 0 8px}
+.chapter + .chapter{border-top:1px solid var(--rule)}
+.ch-head{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.ch-no{flex:none;width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.95rem}
+.ch-head h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800}
+.intro{max-width:62ch;margin-bottom:24px;color:var(--ink-2)}
+h3{font-size:1.06rem;font-weight:800;margin:28px 0 8px}
+
+/* glossary */
+.term{border:0;background:none;padding:0;cursor:help;color:inherit;font-weight:inherit;text-decoration:underline dotted var(--blue);text-decoration-thickness:2px;text-underline-offset:3px}
+.pop{position:absolute;z-index:40;max-width:300px;background:var(--ink);color:#fff;font-size:.88rem;line-height:1.45;padding:12px 14px;border-radius:12px;box-shadow:0 14px 30px -12px rgba(15,30,61,.5);animation:up .25s var(--e)}
+.pop b{display:block;margin-bottom:2px}
+
+/* ---------- flow ---------- */
+.flow{border-radius:26px;padding:26px;background:var(--wash-2);border:1px solid var(--rule)}
+.lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;position:relative}
+.lane{border-radius:18px;padding:16px;background:#fff;border:1.5px solid var(--rule);transition:border-color .35s,box-shadow .35s,transform .35s var(--e);display:flex;flex-direction:column}
+.lane-head{display:flex;gap:10px;align-items:center;margin-bottom:30px}
+.lane-ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none;background:var(--wash);color:var(--blue);transition:transform .35s var(--e)}
+.lane-ico svg{width:20px;height:20px}
+.lane[data-lane="app"] .lane-ico{background:var(--blue);color:#fff}
+.lane[data-lane="team"] .lane-ico{background:var(--ink);color:#fff}
+.lane-head b{display:block;line-height:1.2;font-weight:800}
+.lane-head small{display:block;font-size:.8rem;color:var(--muted);line-height:1.3}
+.lane-card{margin-top:auto;border-radius:12px;padding:11px 12px;font-size:.88rem;line-height:1.35;color:var(--muted);border:1px dashed var(--rule);min-height:62px}
+.lane-card b{display:block;color:var(--ink-2);font-weight:700}
+.lane.active{border-color:var(--blue);box-shadow:0 18px 34px -20px rgba(29,95,209,.7);transform:translateY(-4px)}
+.lane.active .lane-ico{transform:scale(1.1)}
+.lane.active .lane-card{border:0;background:var(--blue);color:#DCE7FB;animation:swap .45s var(--e)}
+.lane.active .lane-card b{color:#fff;font-size:.98rem}
+.lane[data-lane="team"].active{border-color:var(--ink);box-shadow:0 18px 34px -20px rgba(15,30,61,.7)}
+.lane[data-lane="team"].active .lane-card{background:var(--ink)}
+.lane[data-lane="client"].active .lane-card{background:var(--wash);color:var(--ink-2)}
+.lane[data-lane="client"].active .lane-card b{color:var(--blue)}
+.trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+.trail path{opacity:.7;fill:none;stroke:var(--blue);stroke-width:2.5;stroke-linecap:round}
+.token{position:absolute;left:0;top:0;z-index:3;display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:var(--ink);font-weight:800;font-size:.78rem;padding:6px 11px 6px 8px;border-radius:999px;box-shadow:0 10px 20px -8px rgba(15,30,61,.45);white-space:nowrap;will-change:transform}
+.token svg{width:15px;height:15px}
+
+.scrub-wrap{margin:26px 0 4px}
+.scrub{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;position:relative}
+.scrub-line{position:absolute;left:4%;right:4%;top:50%;height:3px;margin-top:-1.5px;background:var(--rule);border-radius:3px;z-index:0}
+.scrub-line i{display:block;height:100%;width:0;background:var(--blue);border-radius:3px;transition:width .6s var(--e)}
+.dot{position:relative;z-index:1;justify-self:center;width:100%;max-width:40px;aspect-ratio:1;border-radius:50%;border:2px solid var(--blue);background:#fff;color:var(--blue);font-weight:800;font-size:.85rem;cursor:pointer;display:grid;place-items:center;padding:0;transition:transform .3s var(--e),opacity .3s,box-shadow .3s}
+.dot[data-lane="app"]{background:var(--blue);color:#fff}
+.dot[data-lane="team"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.dot.past{opacity:.4}
+.dot[aria-current="step"]{transform:scale(1.22);box-shadow:0 0 0 4px var(--wash-2),0 0 0 6px var(--amber)}
+.dot:hover{transform:scale(1.12)}
+.repeat{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;margin-top:10px}
+.repeat div{grid-column:4 / 13;border:2px solid var(--blue-3);border-top:0;border-radius:0 0 10px 10px;height:10px}
+.repeat p{grid-column:4 / 13;text-align:center;font-size:.82rem;color:var(--blue);font-weight:700;margin:5px 0 0}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px;margin-top:20px;background:#fff;border:1px solid var(--rule);border-radius:20px;padding:22px;position:relative;overflow:hidden}
+.stage-text{display:flex;flex-direction:column}
+.who{font-size:.84rem;font-weight:800;color:var(--blue)}
+.stage h3{margin:4px 0 8px;font-size:1.4rem}
+.stage p{margin:0;color:var(--ink-2)}
+.stage .next{margin-top:12px;font-size:.88rem;color:var(--muted)}
+.controls{display:flex;gap:8px;margin-top:auto;padding-top:18px}
+.ic-btn{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--rule);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--ink);transition:transform .2s var(--e),border-color .2s}
+.ic-btn:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+.ic-btn svg{width:18px;height:18px}
+.ic-btn.play{background:var(--blue);border-color:var(--blue);color:#fff}
+.ic-btn.play:hover{background:var(--blue-deep);color:#fff}
+.timer{position:absolute;left:0;bottom:0;height:3px;width:100%;transform-origin:left;background:var(--amber);transform:scaleX(0)}
+.timer.run{animation:timer var(--dur,4.6s) linear both;transform:scaleX(1)}
+.legend-row{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:14px;font-size:.85rem;color:var(--muted)}
+.legend-row span{display:inline-flex;align-items:center;gap:7px}
+.legend-row i{width:12px;height:12px;border-radius:50%;border:2px solid var(--blue);display:inline-block}
+.legend-row i.app{background:var(--blue)}
+.legend-row i.team{background:var(--ink);border-color:var(--ink)}
+.legend-row i.tok{background:var(--amber);border-color:var(--amber);border-radius:4px}
+
+/* scenes */
+.scene{height:250px;border-radius:16px;background:var(--wash);position:relative;overflow:hidden;display:grid;place-items:center;padding:16px;font-size:.84rem}
+.sc-card{width:100%;max-width:280px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 12px 26px -16px rgba(15,30,61,.4)}
+.sc-card > small{display:block;color:var(--muted);font-weight:600;margin-bottom:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 11px;font-weight:700;font-size:.8rem;background:var(--wash);color:var(--blue);margin-top:10px}
+.pill.ok{background:var(--green-wash);color:var(--green)}
+.pill svg{width:13px;height:13px}
+.otp{display:flex;gap:6px}
+.otp i{flex:1;height:38px;border-radius:9px;border:1.5px solid var(--blue-3);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:1.05rem;color:var(--ink)}
+.person{display:flex;align-items:center;gap:10px}
+.av{width:34px;height:34px;border-radius:50%;background:var(--wash);color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:.75rem;flex:none}
+.av.sm{width:24px;height:24px;font-size:.62rem;background:var(--ink);color:#fff}
+.person b{display:block;font-size:.88rem}
+.person small{color:var(--muted)}
+.mini-btn{margin-left:auto;position:relative;border-radius:999px;padding:6px 12px;background:var(--green);color:#fff;font-weight:700;font-size:.78rem;overflow:hidden;animation:press .7s var(--e) var(--d,0s) both;display:inline-flex;gap:5px;align-items:center}
+.mini-btn svg{width:12px;height:12px}
+.mini-btn .rp{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;background:#fff;opacity:0;animation:ripple .6s ease-out var(--d,0s) both}
+.assign{display:flex;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--rule);font-size:.82rem}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.plans span{border:1.5px solid var(--rule);border-radius:10px;padding:8px 6px;text-align:center;font-weight:600;font-size:.76rem}
+.plans b{display:block;font-size:.88rem}
+.plans .pk{background:var(--blue);border-color:var(--blue);color:#fff;animation:up .5s var(--e) .35s both,pick .5s var(--e) .9s both}
+.paybar{display:flex;justify-content:space-between;align-items:center;margin-top:10px;border-radius:10px;background:var(--green-wash);padding:8px 10px;font-size:.8rem}
+.paybar b{color:var(--green)}
+.snap{display:flex;gap:14px;align-items:center}
+.vf{position:relative;width:132px;height:178px;border-radius:16px;background:var(--ink);padding:14px;display:grid;place-items:center}
+.vf .c{position:absolute;width:16px;height:16px;border-color:#fff;border-style:solid;opacity:.8}
+.vf .c1{top:8px;left:8px;border-width:2px 0 0 2px}.vf .c2{top:8px;right:8px;border-width:2px 2px 0 0}
+.vf .c3{bottom:8px;left:8px;border-width:0 0 2px 2px}.vf .c4{bottom:8px;right:8px;border-width:0 2px 2px 0}
+.flash{position:absolute;inset:0;border-radius:16px;background:#fff;opacity:0;animation:flash .5s ease var(--d,0s) both}
+.rcpt{background:#fff;border-radius:4px;padding:9px 8px;width:92px;font-size:.6rem;line-height:1.3;color:var(--ink);position:relative;box-shadow:0 6px 14px -6px rgba(0,0,0,.35)}
+.rcpt b{display:block;font-size:.62rem;text-align:center;margin-bottom:5px}
+.rcpt i{display:block;height:4px;border-radius:2px;background:#DCE3EF;margin:4px 0}
+.rcpt i.s{width:60%}
+.rcpt em{display:block;font-style:normal;font-weight:800;text-align:right;margin-top:6px;font-size:.7rem}
+.rcpt.big{width:104px;padding:12px 10px}
+.scanline{position:absolute;left:-6px;right:-6px;height:3px;border-radius:3px;background:var(--blue-2);box-shadow:0 0 14px 4px rgba(79,134,232,.55);opacity:0;animation:scan 1.5s ease-in-out var(--d,0s) both}
+.thumbs{display:flex;flex-direction:column;gap:8px}
+.thumbs > div{display:flex;gap:6px}
+.thumbs span{width:34px;height:44px;border-radius:6px;background:#fff;border:1px solid var(--rule);box-shadow:0 4px 10px -6px rgba(0,0,0,.3)}
+.thumbs b{font-size:.8rem}
+.ai{display:flex;gap:14px;align-items:center}
+.fields{display:grid;gap:5px;width:170px}
+.fld{background:#fff;border-radius:9px;padding:4px 9px;border-left:3px solid var(--blue);line-height:1.3}
+.fld small{display:block;color:var(--muted);font-size:.68rem;font-weight:600}
+.fld b{font-size:.8rem}
+.sheet .r{display:grid;grid-template-columns:1fr auto 18px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--rule);font-size:.78rem}
+.sheet .r.h{color:var(--muted);font-weight:700;font-size:.7rem;padding-top:0}
+.tick{width:18px;height:18px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center}
+.tick svg{width:10px;height:10px}
+.sc-card.dash{margin-top:44px}
+.dash .bars{display:flex;align-items:flex-end;gap:10px;height:84px;padding:0 4px;border-bottom:1px solid var(--rule)}
+.dash .bars i{flex:1;background:var(--blue);border-radius:6px 6px 0 0}
+.dash .bars i:last-child{background:var(--blue-3)}
+.dash .ql{display:flex;gap:10px;padding:4px 4px 0;font-size:.68rem;color:var(--muted)}
+.dash .ql span{flex:1;text-align:center}
+.notif{position:absolute;top:12px;left:12px;right:12px;background:var(--ink);color:#fff;border-radius:12px;padding:9px 11px;display:flex;gap:9px;align-items:center;font-size:.76rem;z-index:2;box-shadow:0 12px 22px -10px rgba(0,0,0,.45)}
+.notif .bi{width:24px;height:24px;border-radius:7px;background:var(--amber);color:var(--ink);display:grid;place-items:center;flex:none}
+.notif .bi.blue{background:var(--blue);color:#fff}
+.notif svg{width:13px;height:13px}
+.notif b{display:block}
+.doc-lines i{display:block;height:7px;border-radius:4px;background:#DCE3EF;margin:8px 0}
+.prog{height:8px;border-radius:5px;background:var(--wash);overflow:hidden;margin-top:12px}
+.prog i{display:block;height:100%;background:var(--blue);border-radius:5px}
+.lock{width:170px;height:220px;border-radius:24px;background:linear-gradient(160deg,#1B3570,#0B1E45);color:#fff;position:relative;padding:28px 10px 10px;text-align:center}
+.lock .t{font-size:2rem;font-weight:800;line-height:1}
+.lock small{color:#93A6CB}
+.lock .notif{top:auto;bottom:14px;left:8px;right:8px;text-align:left;background:#fff;color:var(--ink);font-size:.7rem;padding:8px}
+.sum-row{display:flex;justify-content:space-between;padding:5px 0;font-size:.82rem}
+.sum-row b{font-weight:800}
+.stamp{position:absolute;right:18px;top:38px;border:3px solid var(--green);color:var(--green);font-weight:800;font-size:1.25rem;padding:2px 12px;border-radius:8px;background:rgba(255,255,255,.85);animation:stamp .55s var(--e) var(--d,0s) both;transform:rotate(-9deg)}
+.save{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.folder{position:relative;width:120px;height:86px}
+.folder .back{position:absolute;inset:10px 0 0 0;background:var(--blue);border-radius:6px 12px 12px 12px}
+.folder .tab{position:absolute;left:0;top:0;width:46px;height:18px;background:var(--blue);border-radius:6px 6px 0 0}
+.folder .paper{position:absolute;left:22px;right:22px;top:-6px;height:70px;background:#fff;border-radius:4px;box-shadow:0 4px 10px -4px rgba(0,0,0,.3);animation:drop .8s var(--e) var(--d,0s) both;padding:8px}
+.folder .paper i{display:block;height:4px;border-radius:2px;background:#DCE3EF;margin:4px 0}
+.folder .front{position:absolute;left:0;right:0;bottom:0;height:56px;background:var(--blue-2);border-radius:10px}
+.bigcheck{width:40px;height:40px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center}
+.bigcheck svg{width:20px;height:20px}
+
+/* disclosures */
+details.more{margin-top:18px;border:1px solid var(--rule);border-radius:16px;background:#fff}
+details.more summary{cursor:pointer;list-style:none;padding:15px 18px;font-weight:800;display:flex;justify-content:space-between;align-items:center;gap:12px}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(45deg) translateY(-3px);transition:transform .3s var(--e);flex:none}
+details.more[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+details.more summary small{font-weight:500;color:var(--muted);font-size:.86rem;margin-left:auto}
+details.more[open] .more-body{animation:swap .4s var(--e)}
+.more-body{padding:0 18px 18px}
+.flows{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.flows h3{margin-top:4px}
+ol.steps{list-style:none;padding:0;margin:8px 0 0;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:38px 1fr;gap:10px;padding:9px 0;border-bottom:1px dashed var(--rule)}
+ol.steps li:last-child{border-bottom:0}
+ol.steps li::before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--wash);color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:.9rem}
+
+/* ---------- tabs ---------- */
+.tabs{display:inline-flex;gap:4px;flex-wrap:wrap;background:var(--wash);padding:4px;border-radius:14px;position:relative}
+.tab{position:relative;z-index:1;border:0;background:none;cursor:pointer;padding:9px 14px;font-weight:700;color:var(--muted);border-radius:10px;display:inline-flex;gap:8px;align-items:center;transition:color .25s}
+.tab em{font-style:normal;font-size:.74rem;background:#fff;color:var(--blue);border-radius:999px;padding:1px 8px}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab-ind{position:absolute;z-index:0;top:4px;left:0;height:calc(100% - 8px);background:#fff;border-radius:10px;box-shadow:0 4px 12px -6px rgba(15,30,61,.3);transition:transform .45s var(--e),width .45s var(--e)}
+.panel{padding-top:20px}
+.panel > p{color:var(--muted);font-size:.92rem;margin-bottom:6px;font-weight:600}
+ul.ticks{list-style:none;padding:0;margin:8px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px}
+ul.ticks li{position:relative;padding-left:30px;line-height:1.45}
+ul.ticks li::before{content:"";position:absolute;left:0;top:.05em;width:20px;height:20px;border-radius:50%;background:var(--wash)}
+ul.ticks li::after{content:"";position:absolute;left:6px;top:.42em;width:9px;height:5px;border-left:2.2px solid var(--blue);border-bottom:2.2px solid var(--blue);transform:rotate(-45deg)}
+.panel.show li{animation:up .45s var(--e) both;animation-delay:calc(var(--i) * 45ms)}
+.box{border:1.5px solid #CFE0FF;border-radius:16px;padding:16px 18px;margin:24px 0 0;background:#fff}
+.box p:last-child{margin:0}
+.box.warn{border-color:#F0DDB0;background:var(--amber-wash)}
+
+/* ---------- months ---------- */
+.months{display:grid;grid-template-columns:repeat(5,1fr);position:relative;margin-top:6px}
+.months::before{content:"";position:absolute;left:10%;right:10%;top:22px;height:3px;background:var(--rule)}
+.months .fill{position:absolute;left:10%;top:22px;height:3px;background:var(--blue);transition:width .6s var(--e)}
+.mo{position:relative;z-index:1;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 4px;color:var(--muted)}
+.mo i{width:46px;height:46px;border-radius:50%;background:#fff;border:2.5px solid var(--rule);display:grid;place-items:center;font-style:normal;font-weight:800;color:var(--muted);transition:all .35s var(--e)}
+.mo b{font-size:.9rem;font-weight:700}
+.mo.done i{border-color:var(--blue);color:var(--blue)}
+.mo[aria-selected="true"] i{background:var(--blue);border-color:var(--blue);color:#fff;transform:scale(1.12);box-shadow:0 10px 20px -10px rgba(29,95,209,.8)}
+.mo[aria-selected="true"] b{color:var(--ink);font-weight:800}
+.mo-panel{margin-top:22px;display:grid;grid-template-columns:1.3fr 1fr 1.3fr;gap:12px}
+.mo-panel > div{border:1px solid var(--rule);border-radius:16px;padding:16px;background:#fff}
+.mo-panel > div:nth-child(2){animation-delay:.06s}.mo-panel > div:nth-child(3){animation-delay:.12s}
+.mo-panel small{display:block;color:var(--muted);font-weight:700;font-size:.82rem;margin-bottom:4px}
+.mo-panel .pay{background:var(--navy);border-color:var(--navy);color:#fff}
+.mo-panel .pay small,.mo-panel .pay span{color:#A9BBDD}
+.mo-panel .pay strong{display:block;font-size:1.55rem;line-height:1.2;font-weight:800}
+.mo-panel .pay span{font-size:.84rem}
+.paid-bar{height:8px;border-radius:9px;background:rgba(255,255,255,.15);margin-top:10px;overflow:hidden}
+.paid-bar i{display:block;height:100%;background:var(--amber);border-radius:9px;transition:width .6s var(--e)}
+.mo-note{margin-top:12px;font-size:.9rem;color:var(--green);font-weight:700;display:flex;gap:8px;align-items:center}
+
+/* ---------- money ---------- */
+.seg-toggle{display:inline-flex;border:1px solid var(--rule);border-radius:999px;padding:3px;background:#fff}
+.seg-toggle button{border:0;background:none;cursor:pointer;padding:7px 16px;border-radius:999px;font-weight:700;font-size:.88rem;color:var(--muted);transition:background .25s,color .25s}
+.seg-toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.split-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.split-top strong{display:block;font-size:2.7rem;font-weight:800;color:var(--blue);line-height:1.05;letter-spacing:-.03em}
+.split-top span{color:var(--muted);font-size:.9rem;font-weight:600}
+.splitbar{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;height:92px}
+.sg{border:0;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 14px;color:#fff;text-align:left;line-height:1.25;transition:transform .3s var(--e),box-shadow .3s;border-radius:6px}
+.sg:first-child{border-radius:16px 6px 6px 16px}
+.sg:last-child{border-radius:6px 16px 16px 6px}
+.sg b{font-size:.98rem;font-weight:800}
+.sg span{font-size:.82rem;opacity:.95}
+.sg:hover{transform:translateY(-3px)}
+.sg[aria-pressed="true"]{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--ink);transform:translateY(-4px)}
+.js [data-reveal] .sg{clip-path:inset(0 100% 0 0)}
+.js [data-reveal].in .sg{clip-path:inset(0);animation:wipe .8s var(--e) both;animation-delay:calc(var(--i) * 110ms + .15s)}
+.d1{background:var(--blue)} .d2{background:#2B6CDB} .d3{background:var(--blue-2)} .d4{background:#6A99EC}
+.tl{background:var(--amber);color:var(--ink)!important}
+.split-legend{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:12px;font-size:.92rem}
+.split-legend b{color:var(--blue)}
+.seg-detail{margin-top:16px;border:1px solid var(--rule);border-radius:18px;padding:18px 20px;background:var(--wash-2)}
+.seg-detail h3{margin:0 0 4px}
+.seg-detail .amt{font-weight:800;color:var(--blue)}
+.tool-list{list-style:none;padding:0;margin:10px 0 0}
+.tool-list li{display:grid;grid-template-columns:1fr auto;gap:12px;padding:8px 0;border-bottom:1px dashed var(--rule);font-size:.93rem;animation:up .4s var(--e) both;animation-delay:calc(var(--i) * 40ms)}
+.tool-list li:last-child{border-bottom:0}
+.tool-list small{display:block;color:var(--muted)}
+.table-wrap{overflow-x:auto;margin:10px 0 14px}
+table{width:100%;border-collapse:collapse;font-size:.94rem;min-width:520px}
+th{text-align:left;font-weight:800;background:var(--wash);padding:10px 12px;border-bottom:1px solid var(--rule)}
+td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+.num{text-align:right;white-space:nowrap}
+tr.total td{font-weight:800;border-top:2px solid var(--ink);border-bottom:0}
+
+/* ---------- free kit ---------- */
+.free{border:2px solid var(--blue);border-radius:20px;overflow:hidden}
+.free .row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;padding:13px 22px;border-bottom:1px dashed var(--rule)}
+.free .row small{display:block;color:var(--muted);font-size:.86rem}
+.free .price{white-space:nowrap;font-weight:700;color:var(--muted)}
+.free .sum{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:18px 22px;background:var(--wash)}
+.free .was{text-decoration:line-through;color:var(--muted);font-weight:700;white-space:nowrap}
+.free .yours{font-size:1.5rem;font-weight:800;color:#fff;background:var(--green);padding:4px 16px;border-radius:999px}
+.js .free[data-reveal] .row{opacity:0}
+.js .free[data-reveal].in .row{opacity:1;animation:up .5s var(--e) both;animation-delay:calc(var(--i) * 90ms + .1s)}
+.js .free[data-reveal].in .yours{animation:pop .6s var(--e) .8s both}
+
+/* ---------- calculator ---------- */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:8px}
+.calc-in,.calc-out{border:1px solid var(--rule);border-radius:20px;padding:22px}
+.calc-in{background:#fff}
+.calc-out{background:var(--navy);color:#fff;border-color:var(--navy);position:relative;overflow:hidden}
+.calc-out::before{content:"";position:absolute;right:-80px;top:-80px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(79,134,232,.35),transparent 70%)}
+.field{margin-bottom:18px}
+.field:last-child{margin-bottom:0}
+.field label{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:.94rem;margin-bottom:6px}
+.field label output{color:var(--blue);font-weight:800}
+input[type=range]{width:100%;accent-color:var(--blue);height:28px;cursor:pointer}
+.ticks-row{display:flex;justify-content:space-between;font-size:.76rem;color:var(--muted)}
+.mixbar{display:flex;height:12px;border-radius:9px;overflow:hidden;margin-top:6px;background:var(--wash)}
+.mixbar i{display:block;height:100%;transition:width .4s var(--e)}
+.mix-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.84rem;color:var(--muted);margin-top:8px}
+.mix-legend span{display:inline-flex;align-items:center;gap:6px}
+.mix-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.c-st{background:var(--blue-3)} .c-sd{background:var(--blue)} .c-pr{background:var(--ink)}
+.calc-out > *{position:relative}
+.calc-out small{display:block;color:#A9BBDD;font-size:.85rem;font-weight:600}
+.big{font-size:2.5rem;font-weight:800;line-height:1.1;margin:2px 0 4px;letter-spacing:-.03em}
+.out-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+.out-grid b{display:block;font-size:1.2rem}
+.payback{margin-top:16px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.08);font-size:.92rem}
+.payback b{color:var(--amber)}
+.reset{border:0;background:none;color:var(--blue);font-weight:700;cursor:pointer;padding:0;font-size:.88rem;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- costs ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 16px}
+.chip{border:1.5px solid var(--rule);background:#fff;border-radius:999px;padding:7px 16px;cursor:pointer;font-weight:700;font-size:.9rem;transition:all .25s var(--e)}
+.chip:hover{border-color:var(--blue)}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.cost-card{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px}
+.cost-list{border:1px solid var(--rule);border-radius:20px;padding:8px 20px;background:#fff}
+.cost-list .li{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 0;border-bottom:1px dashed var(--rule);font-size:.94rem;animation:swap .35s var(--e) both;animation-delay:calc(var(--i) * 30ms)}
+.cost-list .li:last-child{border-bottom:0}
+.cost-list .li.tot{font-weight:800;border-top:2px solid var(--ink);border-bottom:0;margin-top:2px}
+.cost-list .li .z{color:var(--muted)}
+.compare{border-radius:20px;padding:22px;background:var(--green-wash);display:flex;flex-direction:column;gap:14px}
+.compare .cmp b{display:block;font-size:1.9rem;line-height:1.1;font-weight:800}
+.compare .cmp span{font-size:.88rem;color:var(--ink-2);font-weight:600}
+.cbar{height:12px;border-radius:9px;background:#fff;overflow:hidden;margin-top:6px}
+.cbar i{display:block;height:100%;background:var(--green);border-radius:9px;transition:width .6s var(--e)}
+.compare p{font-size:.9rem;margin:0;color:var(--ink-2)}
+
+/* ---------- who ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.who-card{border:1px solid var(--rule);border-radius:20px;padding:22px}
+.who-card h3{margin:0 0 10px;display:flex;align-items:center;gap:10px}
+.who-card.you{background:var(--wash-2)}
+ul.plain{margin:0;padding-left:20px}
+ul.plain li{margin-bottom:8px}
+.checklist{list-style:none;margin:0;padding:0}
+.checklist label{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:7px 0;cursor:pointer;line-height:1.45}
+.checklist input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--green);cursor:pointer}
+.checklist input:checked + span{color:var(--muted);text-decoration:line-through}
+.check-count{font-size:.85rem;color:var(--muted);font-weight:600;margin-left:auto}
+.check-bar{height:6px;border-radius:6px;background:#fff;border:1px solid var(--rule);overflow:hidden;margin-bottom:8px}
+.check-bar i{display:block;height:100%;width:0;background:var(--green);transition:width .5s var(--e)}
+
+/* ---------- next ---------- */
+.next-steps{counter-reset:n;list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.next-steps li{counter-increment:n;border:1px solid var(--rule);border-radius:18px;padding:18px;position:relative;transition:transform .3s var(--e),box-shadow .3s}
+.next-steps li::before{content:counter(n);display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;margin-bottom:12px}
+.js [data-reveal].next-steps li{opacity:0}
+.js [data-reveal].next-steps.in li{opacity:1;animation:up .55s var(--e) both;animation-delay:calc(var(--i) * 110ms)}
+.closing{margin-top:28px;border-radius:24px;background:var(--navy);color:#fff;padding:32px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden}
+.closing::before{content:"";position:absolute;left:-60px;bottom:-120px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(79,134,232,.35),transparent 70%)}
+.closing > *{position:relative}
+.closing h3{margin:0 0 4px;font-size:1.4rem}
+.closing p{margin:0;color:#C9D6EE}
+.closing .btn{background:#fff;color:var(--navy);border-color:#fff}
+.closing .btn:hover{background:#E6EEFC}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr;padding:0 22px}
+  .rail-wrap{display:none}
+  .tb-contents{display:inline-flex}
+  .topbar-in{padding:10px 22px}
+  .hero-in{padding:56px 22px 60px}
+}
+@media (max-width:900px){
+  .hero-in{grid-template-columns:1fr}
+  .phone-col{display:none}
+  .stage{grid-template-columns:1fr}
+  .calc,.cost-card{grid-template-columns:1fr}
+  .next-steps{grid-template-columns:1fr 1fr}
+  .mo-panel{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  .now{display:none}
+  .tb-long{display:none}
+  .facts{grid-template-columns:1fr;gap:12px}
+  .facts div{border-right:0;margin:0;padding:0}
+  .flow{padding:14px;border-radius:20px}
+  .lanes{grid-template-columns:1fr;gap:10px}
+  .lane{flex-direction:row;align-items:center;gap:12px;padding:10px 12px}
+  .lane.active{transform:none}
+  .lane-head{margin:0;flex:none;width:112px}
+  .lane-head small{display:none}
+  .lane-card{margin:0;flex:1;min-height:0}
+  .scrub,.repeat{gap:3px}
+  .dot{font-size:.72rem;border-width:1.5px}
+  .stage{padding:16px}
+  .scene{height:240px;padding:10px}
+  .fields{width:150px}
+  .rcpt.big{width:90px;padding:10px 8px}
+  .ai{gap:10px}
+  .lane{margin-top:6px}
+  .controls{justify-content:space-between}
+  .flows,.two{grid-template-columns:1fr;gap:12px}
+  ul.ticks{grid-template-columns:1fr}
+  .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto}
+  .tab{white-space:nowrap}
+  .mo b{font-size:.76rem}
+  .mo i{width:38px;height:38px}
+  .months::before,.months .fill{top:18px}
+  .splitbar{grid-template-columns:1fr;height:auto}
+  .sg{padding:12px 14px;flex-direction:row;justify-content:space-between;align-items:center;border-radius:10px!important}
+  .free .row,.free .sum{padding-left:16px;padding-right:16px}
+  .next-steps{grid-template-columns:1fr}
+  .drawer ol{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js [data-reveal],.js [data-reveal] *{opacity:1!important;transform:none!important;clip-path:none!important}
+  .toast{display:none}
+}
+@media print{
+  body{font-size:11pt}
+  .topbar,.rail-wrap,.controls,.cta-row,.hint,.scrub-wrap,.tabs,.chips,.seg-toggle,.closing .btn,.reset,.phone-col,.lanes,.stage,.months,.legend-row{display:none!important}
+  .hero{background:#fff;color:var(--ink)}.hero::before{display:none}.lede{color:var(--ink-2)}.facts span{color:var(--muted)}
+  .shell{display:block;padding:0}
+  .chapter{padding-top:24px}
+  .panel[hidden],.mo-print{display:block!important}
+  [data-reveal],[data-reveal] *{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}
+  .calc-out{color:var(--ink);background:#fff}
+}
+.mo-print{display:none}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#top"><i>MD</i>Tax MD proposal</a>
+    <div class="now">Now reading: <b id="nowTitle">Overview</b></div>
+    <button class="tb-btn tb-contents" id="drawerBtn" aria-expanded="false" aria-controls="drawer">Contents</button>
+    <button class="tb-btn" id="printBtn" type="button">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+      <span class="tb-long">Save as&nbsp;</span>PDF
+    </button>
+  </div>
+  <div class="drawer" id="drawer" hidden><ol id="drawerList"></ol></div>
+  <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+</div>
+
+<header class="hero" id="top">
+  <div class="hero-in">
+    <div>
+      <div class="kicker ld" style="--d:.05s"><i></i>Prepared by Altruix for Tax MD, October 2026</div>
+      <h1 class="ld" style="--d:.15s">Tax MD full proposal and price breakdown</h1>
+      <p class="lede ld" style="--d:.3s">Tax MD is a tax service for doctors, dentists, nurses and other medical professionals. They snap photos of their receipts (and the occasional tax form) in an app, and your team does the rest. This page explains everything the app does, how it works, how long it takes, and exactly where the money goes.</p>
+      <div class="facts ld" style="--d:.45s">
+        <div><span>Total price (fixed)</span><strong id="heroPrice">₱750,000</strong></div>
+        <div><span>Build time</span><strong>5 months</strong></div>
+        <div><span>Where it runs</span><strong>Web, iPhone, Android</strong></div>
+      </div>
+      <div class="cta-row ld" style="--d:.6s">
+        <a class="btn" href="#flow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Watch how the app works</a>
+        <a class="btn ghost" href="#money">Go to the price breakdown</a>
+      </div>
+      <p class="hint ld" style="--d:.7s">Tap any word with a dotted underline, like <button class="term" data-term="BIR">BIR</button>, for a quick explanation.</p>
+    </div>
+    <div class="phone-col ld" style="--d:.35s" aria-hidden="true">
+      <div class="phone">
+        <div class="screen">
+          <div class="toast"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><div><b>Receipt read</b>Southside Pharmacy, ₱1,245.00</div></div>
+          <div class="scr-hi">Good morning,</div>
+          <div class="scr-name">Dr. Reyes</div>
+          <div class="scr-due"><small>Next deadline</small><b>Quarterly income tax</b><br>Due November 15</div>
+          <div class="scr-up">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            Upload receipts
+          </div>
+          <div class="scr-tiles">
+            <div><small>Receipts this quarter</small><b id="rcCount">38</b></div>
+            <div><small>Tax withheld</small><b>₱18,450</b></div>
+          </div>
+          <div class="scr-miss"><i></i>1 form 2307 still missing</div>
+        </div>
+      </div>
+      <p class="phone-cap">Sketch of the client's home screen</p>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <div class="rail-wrap">
+    <nav class="rail" aria-label="Contents"><p>Contents</p><ol id="railList"></ol></nav>
+  </div>
+
+<main>
+
+<section id="flow" class="chapter" data-title="How the app works">
+  <div class="ch-head"><span class="ch-no">1</span><h2>How the app works</h2></div>
+  <p class="intro">There are two sides to Tax MD: what your clients do, and what your team does. Clients only do a few easy things. Your team handles the hard part, and the app does a lot of the work automatically. Watch the yellow tag move between them, or tap any number to jump to a step.</p>
+
+  <div class="flow" id="flowBox" data-reveal>
+    <div class="lanes" id="lanes">
+      <svg class="trail" id="trail" aria-hidden="true"><path id="trailPath" d=""/></svg>
+      <div class="token" id="token" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg><span id="tokenLabel">New account</span></div>
+      <div class="lane" data-lane="client">
+        <div class="lane-head">
+          <span class="lane-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4.5-6.5 8-6.5s7 2 8 6.5"/></svg></span>
+          <div><b>Client</b><small>Doctor or medical professional</small></div>
+        </div>
+        <div class="lane-card"></div>
+      </div>
+      <div class="lane" data-lane="app">
+        <div class="lane-head">
+          <span class="lane-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18h3"/></svg></span>
+          <div><b>Tax MD app</b><small>Works automatically</small></div>
+        </div>
+        <div class="lane-card"></div>
+      </div>
+      <div class="lane" data-lane="team">
+        <div class="lane-head">
+          <span class="lane-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
+          <div><b>Your team</b><small>CPA and staff</small></div>
+        </div>
+        <div class="lane-card"></div>
+      </div>
+    </div>
+
+    <div class="scrub-wrap">
+      <div class="scrub" id="scrub" role="group" aria-label="Choose a step"><div class="scrub-line"><i id="scrubFill"></i></div></div>
+      <div class="repeat" aria-hidden="true"><div></div><p>Steps 4 to 12 repeat every tax period</p></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-text">
+        <div aria-live="polite">
+          <div class="who" id="dWho"></div>
+          <h3 id="dTitle"></h3>
+          <p id="dText"></p>
+          <p class="next" id="dNext"></p>
+        </div>
+        <div class="controls">
+          <button class="ic-btn" id="prevBtn" aria-label="Previous step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="ic-btn play" id="playBtn" aria-label="Play the flow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+          <button class="ic-btn" id="nextBtn" aria-label="Next step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+      <div class="scene" id="scene" aria-hidden="true"></div>
+      <div class="timer" id="timer"></div>
+    </div>
+    <div class="legend-row">
+      <span><i></i>Client does it</span>
+      <span><i class="app"></i>App does it automatically</span>
+      <span><i class="team"></i>Your team does it</span>
+      <span><i class="tok"></i>What's being passed along</span>
+    </div>
+  </div>
+
+  <details class="more">
+    <summary>See each side's steps in detail <small>Client: 7 steps, team: 6 steps</small></summary>
+    <div class="more-body">
+      <div class="flows">
+        <div>
+          <h3>The client's steps</h3>
+          <ol class="steps">
+            <li><div><strong>Signs up</strong> on the website or the phone app, using an email code instead of a password.</div></li>
+            <li><div><strong>Gets approved</strong> by your team and picks a plan.</div></li>
+            <li><div><strong>Takes a photo</strong> of a receipt and uploads it. Receipts are most of what clients send; <button class="term" data-term="2307">2307s</button> come in a few times a year.</div></li>
+            <li><div><strong>Gets reminders</strong> before every <button class="term" data-term="BIR">BIR</button> deadline.</div></li>
+            <li><div><strong>Checks the dashboard</strong> to see income, tax withheld and missing documents.</div></li>
+            <li><div><strong>Taps "Approve"</strong> when the tax return is ready.</div></li>
+            <li><div><strong>Downloads the proof</strong> once your team has filed.</div></li>
+          </ol>
+        </div>
+        <div>
+          <h3>Your team's steps</h3>
+          <ol class="steps">
+            <li><div><strong>Approves new clients</strong> and assigns them to a staff member.</div></li>
+            <li><div><strong>Reviews receipts.</strong> The app reads each receipt and fills in the date, store, amount and category; staff check them.</div></li>
+            <li><div><strong>Matches 2307s</strong> with invoices. The app flags anything missing.</div></li>
+            <li><div><strong>Exports to Excel</strong> if needed, and prepares the tax return.</div></li>
+            <li><div><strong>Sends it for approval</strong> to the client in the app.</div></li>
+            <li><div><strong>Files with the BIR</strong> and uploads the proof for the client.</div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </details>
+</section>
+
+<section id="features" class="chapter" data-title="Everything included">
+  <div class="ch-head"><span class="ch-no">2</span><h2>Everything included in the full-scale app</h2></div>
+  <p class="intro">All of this is part of the ₱750,000. Pick a group to see what it covers.</p>
+  <div class="tabs" role="tablist" aria-label="Feature groups" id="featTabs"><span class="tab-ind" id="tabInd"></span></div>
+  <div id="featPanels"></div>
+  <div class="box warn">
+    <p><strong>Not included:</strong> filing directly into the BIR's own systems, BIR e-invoicing, bank account connections, legal or accounting advice, and the monthly running costs after launch (see <a href="#after">Costs after launch</a>).</p>
+  </div>
+</section>
+
+<section id="plan" class="chapter" data-title="The 5-month plan and payments">
+  <div class="ch-head"><span class="ch-no">3</span><h2>The 5-month plan and payments</h2></div>
+  <p class="intro">Each month has a clear goal. You pay ₱150,000 at the start of each month, and that payment unlocks that month's work. Tap a month to see what gets built and what you'll see at the end of it.</p>
+  <div data-reveal>
+    <div class="months" role="tablist" aria-label="Months" id="months"><span class="fill" id="monthFill"></span></div>
+    <div id="moPanel" class="mo-panel" role="tabpanel" aria-live="polite"></div>
+    <div id="moNote"></div>
+  </div>
+  <div class="mo-print"><div class="table-wrap"><table>
+    <thead><tr><th>When</th><th>What we build</th><th class="num">Payment</th><th>What you see at the end</th></tr></thead>
+    <tbody id="moPrintBody"></tbody>
+  </table></div></div>
+</section>
+
+<section id="money" class="chapter" data-title="Where the ₱750,000 goes">
+  <div class="ch-head"><span class="ch-no">4</span><h2>Where the ₱750,000 goes</h2></div>
+  <p class="intro">The price covers two things: the pay of the 4 developers who build Tax MD for 5 months, and the tools they need to build it. That's <mark>₱150,000 per month</mark> for 5 months. Tap any part of the bar to see what it pays for.</p>
+  <div data-reveal id="moneyBox">
+    <div class="split-top">
+      <div><span id="splitLabel">Total over 5 months</span><strong id="splitTotal">₱750,000</strong></div>
+      <div class="seg-toggle" role="group" aria-label="Show amounts">
+        <button type="button" data-mode="total" aria-pressed="true">Whole project</button>
+        <button type="button" data-mode="month" aria-pressed="false">Per month</button>
+      </div>
+    </div>
+    <div class="splitbar" id="splitbar"></div>
+    <div class="split-legend"><span><b>80%</b> pays the 4 developers (<span id="devSum">₱600,000</span>)</span><span><b>20%</b> pays for development tools (<span id="toolSum">₱150,000</span>)</span></div>
+    <div class="seg-detail" id="segDetail" aria-live="polite"></div>
+  </div>
+  <details class="more">
+    <summary>See the full tables <small>Monthly, team and tools</small></summary>
+    <div class="more-body">
+      <h3>Every month</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Each month</th><th class="num">Amount</th><th>What it pays for</th></tr></thead>
+        <tbody>
+          <tr><td>4 developers</td><td class="num">₱120,000</td><td>₱30,000 per developer, so each can work on Tax MD full-time</td></tr>
+          <tr><td>Development tools (20%)</td><td class="num">₱30,000</td><td>AI tools, test servers, app store accounts and testing</td></tr>
+          <tr class="total"><td>Total per month</td><td class="num">₱150,000</td><td>× 5 months = ₱750,000</td></tr>
+        </tbody>
+      </table></div>
+      <h3>The team</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Developer</th><th>Main job</th><th class="num">Per month</th><th class="num">5 months</th></tr></thead>
+        <tbody>
+          <tr><td>Developer 1</td><td>Project lead, design and overall build</td><td class="num">₱30,000</td><td class="num">₱150,000</td></tr>
+          <tr><td>Developer 2</td><td>Database, security and AI document reading</td><td class="num">₱30,000</td><td class="num">₱150,000</td></tr>
+          <tr><td>Developer 3</td><td>iPhone and Android apps</td><td class="num">₱30,000</td><td class="num">₱150,000</td></tr>
+          <tr><td>Developer 4</td><td>Team screens, website and testing</td><td class="num">₱30,000</td><td class="num">₱150,000</td></tr>
+          <tr class="total"><td colspan="2">All 4 developers</td><td class="num">₱120,000</td><td class="num">₱600,000</td></tr>
+        </tbody>
+      </table></div>
+      <h3>The 20% for development tools</h3>
+      <p class="small muted">These are the subscriptions and services the team pays for while building. Amounts are approximate, based on each provider's current monthly price at about ₱62 per US dollar.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Tool or service</th><th>Why we need it</th><th class="num">Per month</th></tr></thead>
+        <tbody id="toolTable"></tbody>
+      </table></div>
+    </div>
+  </details>
+</section>
+
+<section id="free" class="chapter" data-title="Free branding kit">
+  <div class="ch-head"><span class="ch-no">5</span><h2>Free branding kit</h2></div>
+  <p class="intro">A new business needs a name people remember and a look people trust. We'll create your full branding kit at no extra cost. Here is what it would normally cost.</p>
+  <div class="free" data-reveal>
+    <div class="row" style="--i:0"><div>Logo and brand identity<small>Logo, colors and fonts for Tax MD</small></div><div class="price">₱35,000</div></div>
+    <div class="row" style="--i:1"><div>Brand guidelines<small>A short guide so everything looks consistent</small></div><div class="price">₱15,000</div></div>
+    <div class="row" style="--i:2"><div>App icon and app store images<small>Icon and screenshots for the App Store and Google Play</small></div><div class="price">₱15,000</div></div>
+    <div class="row" style="--i:3"><div>Social media launch kit<small>10 ready-to-post designs for Facebook and Instagram</small></div><div class="price">₱15,000</div></div>
+    <div class="row" style="--i:4"><div>Business cards and letterhead<small>Print-ready files</small></div><div class="price">₱5,000</div></div>
+    <div class="row" style="--i:5"><div>Flyer for clinics and hospitals<small>One-page flyer explaining Tax MD</small></div><div class="price">₱5,000</div></div>
+    <div class="sum"><div><strong>Your price</strong></div><div class="was">₱90,000</div><div class="yours">FREE</div></div>
+  </div>
+  <p class="small muted" style="margin-top:12px">That means you get ₱840,000 worth of work for ₱750,000.</p>
+</section>
+
+<section id="earn" class="chapter" data-title="How much Tax MD could earn">
+  <div class="ch-head"><span class="ch-no">6</span><h2>How much Tax MD could earn</h2></div>
+  <p class="intro">Clients pay Tax MD a regular fee for the service. Here is an example using plans similar to <a href="https://medtax.ph/" target="_blank" rel="noopener">MedTax</a>, a similar service already in the market. You decide your own prices.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Example plan</th><th>Who it's for</th><th class="num">Price</th><th class="num">Per client, per year</th></tr></thead>
+    <tbody>
+      <tr><td>Starter</td><td>Residents and fellows</td><td class="num">₱899 / quarter</td><td class="num">₱3,596</td></tr>
+      <tr><td>Standard</td><td>Doctors earning up to ₱3M a year</td><td class="num">₱2,899 / quarter</td><td class="num">₱11,596</td></tr>
+      <tr><td>Premium</td><td><button class="term" data-term="VAT">VAT-registered</button> doctors earning over ₱3M</td><td class="num">₱3,500 / month</td><td class="num">₱42,000</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Try your own numbers</h3>
+  <p class="small muted">Move the sliders to see what Tax MD could earn. It starts with 30% Starter, 60% Standard and 10% Premium, where the average client pays about ₱12,236 a year.</p>
+  <div class="calc" data-reveal>
+    <div class="calc-in">
+      <div class="field">
+        <label for="cClients">Number of clients <output id="oClients">100</output></label>
+        <input type="range" id="cClients" min="10" max="1000" step="10" value="100">
+        <div class="ticks-row"><span>10</span><span>250</span><span>500</span><span>750</span><span>1,000</span></div>
+      </div>
+      <div class="field">
+        <label for="cStarter">Clients on Starter <output id="oStarter">30%</output></label>
+        <input type="range" id="cStarter" min="0" max="100" step="5" value="30">
+      </div>
+      <div class="field">
+        <label for="cPremium">Clients on Premium <output id="oPremium">10%</output></label>
+        <input type="range" id="cPremium" min="0" max="100" step="5" value="10">
+      </div>
+      <div class="field">
+        <div class="mixbar" aria-hidden="true"><i class="c-st" id="mSt"></i><i class="c-sd" id="mSd"></i><i class="c-pr" id="mPr"></i></div>
+        <div class="mix-legend"><span><i class="c-st"></i>Starter <b id="lSt">30%</b></span><span><i class="c-sd"></i>Standard <b id="lSd">60%</b></span><span><i class="c-pr"></i>Premium <b id="lPr">10%</b></span></div>
+      </div>
+      <button class="reset" id="calcReset" type="button">Reset to the example</button>
+    </div>
+    <div class="calc-out" aria-live="polite">
+      <small>Possible earnings per year</small>
+      <div class="big" id="oYear">₱1,223,600</div>
+      <small id="oMonth">about ₱102,000 a month</small>
+      <div class="out-grid">
+        <div><small>Average client pays</small><b id="oAvg">₱12,236/yr</b></div>
+        <div><small>Running the app costs</small><b id="oRun">₱4,170/mo</b></div>
+      </div>
+      <div class="payback" id="oPayback"></div>
+    </div>
+  </div>
+  <p class="small muted" style="margin-top:12px">These are examples, not promises. Earnings are before staff salaries, payment fees and taxes. Running costs come from the table in the next section.</p>
+</section>
+
+<section id="after" class="chapter" data-title="Costs after launch">
+  <div class="ch-head"><span class="ch-no">7</span><h2>Costs after launch</h2></div>
+  <p class="intro">These are not part of the ₱750,000. Once Tax MD is live, it needs a database, servers and an AI service to keep running. These costs grow slowly as you get more clients, and they stay small next to what each client pays. Pick a number of clients:</p>
+  <div class="chips" role="group" aria-label="Number of clients" id="costChips"></div>
+  <div class="cost-card" data-reveal>
+    <div class="cost-list" id="costList" aria-live="polite"></div>
+    <div class="compare" id="compare"></div>
+  </div>
+  <details class="more">
+    <summary>What we assumed <small>Receipts, file sizes, AI cost</small></summary>
+    <div class="more-body">
+      <ul class="plain">
+        <li>Each client uploads about <strong>30 receipts</strong> and 2 other documents (like 2307s) a month.</li>
+        <li>The app shrinks each photo to about 0.4 MB, so each client adds about 150 MB of files a year.</li>
+        <li>Reading one receipt with a low-cost AI model costs about <strong>₱0.20</strong>.</li>
+        <li>The domain taxmd.ph costs US$42.36 a year on Porkbun (about ₱2,630), shown split per month.</li>
+        <li>Numbers are monthly, after one full year of receipts is stored. Pesos use about ₱62 per US dollar.</li>
+        <li>The database plan includes 100 GB of file storage, enough for about 650 clients' receipts for a full year. After that, extra storage costs very little. At 500 and 1,000 clients, the database needs a stronger server, which is why that cost goes up.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="more">
+    <summary>Compare all client counts side by side <small>Full table</small></summary>
+    <div class="more-body"><div class="table-wrap"><table id="costTable"></table></div></div>
+  </details>
+  <h3>Other costs</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Cost</th><th class="num">About</th><th>Paid to</th></tr></thead>
+    <tbody>
+      <tr><td>Online payment fees</td><td class="num">About 3% + ₱15 per card payment</td><td>PayMongo, taken from each payment (about ₱35 per Standard client a month)</td></tr>
+      <tr><td>Optional maintenance plan</td><td class="num">₱25,000–₱40,000/month</td><td>Altruix, for updates, fixes and small changes</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">Sources: <a href="https://supabase.com/pricing" target="_blank" rel="noopener">Supabase pricing</a> (database, storage) and <a href="https://benchlm.ai/anthropic/api-pricing" target="_blank" rel="noopener">Claude API pricing</a> (AI reading). Costs are estimates and depend on how many receipts clients actually upload.</p>
+</section>
+
+<section id="who" class="chapter" data-title="Who does what">
+  <div class="ch-head"><span class="ch-no">8</span><h2>Who does what</h2></div>
+  <p class="intro">Building Tax MD is a team effort. Here's what each side takes care of. You can tick off your items as you go; the ticks stay saved on this device.</p>
+  <div class="two" data-reveal>
+    <div class="who-card">
+      <h3>Altruix</h3>
+      <ul class="plain">
+        <li>Design, build and test the full app</li>
+        <li>Publish on the App Store and Google Play</li>
+        <li>Create the free branding kit</li>
+        <li>Keep the app secure and backed up</li>
+        <li>Train your staff</li>
+        <li>Fix bugs for 30 days after launch</li>
+      </ul>
+    </div>
+    <div class="who-card you">
+      <h3>You <span class="check-count" id="checkCount">0 of 6 done</span></h3>
+      <div class="check-bar"><i id="checkBar"></i></div>
+      <ul class="checklist" id="checklist">
+        <li><label><input type="checkbox" data-k="rules"><span>Confirm the tax rules, forms and deadlines</span></label></li>
+        <li><label><input type="checkbox" data-k="register"><span>Register the business (needed for the app stores and online payments)</span></label></li>
+        <li><label><input type="checkbox" data-k="accounts"><span>Open the Apple, Google and PayMongo accounts in your business name</span></label></li>
+        <li><label><input type="checkbox" data-k="dpo"><span>Appoint a <button class="term" data-term="DPO">Data Protection Officer</button></span></label></li>
+        <li><label><input type="checkbox" data-k="lawyer"><span>Have a lawyer prepare the privacy notice and terms</span></label></li>
+        <li><label><input type="checkbox" data-k="feedback"><span>Give feedback at the end of each month</span></label></li>
+      </ul>
+    </div>
+  </div>
+  <p class="small muted" style="margin-top:14px">The app helps your team organize the work. It does not file with the BIR by itself or give tax advice.</p>
+</section>
+
+<section id="next" class="chapter" data-title="Next steps">
+  <div class="ch-head"><span class="ch-no">9</span><h2>Next steps</h2></div>
+  <p class="intro">Four steps to get started.</p>
+  <ol class="next-steps" data-reveal>
+    <li style="--i:0">Read this proposal and send us your questions.</li>
+    <li style="--i:1">Sign the agreement and make the first payment of ₱150,000.</li>
+    <li style="--i:2">Send us your current spreadsheets and sample documents, with personal details hidden.</li>
+    <li style="--i:3">We start Month 1 and show you progress at the end of every month.</li>
+  </ol>
+  <div class="closing">
+    <div><h3>Ready to build Tax MD?</h3><p>₱750,000 fixed, 5 months, live on web, App Store and Google Play.</p></div>
+    <button class="btn" type="button" id="printBtn2">Save this proposal as PDF</button>
+  </div>
+  <footer><p class="small muted">Prepared by Altruix. Prices are in Philippine pesos and exclude VAT and government fees. Tool costs and earnings are estimates.</p></footer>
+</section>
+
+</main>
+</div>
+
+<div class="pop" id="pop" role="tooltip" hidden></div>
+
+<script>
+(function(){
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const peso = n => "₱" + Math.round(n).toLocaleString("en-US");
+const $ = id => document.getElementById(id);
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+const BELL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 21h4"/></svg>';
+
+/* number tween */
+function tween(el, to, fmt, dur){
+  const from = el.dataset.v !== undefined ? +el.dataset.v : to;
+  el.dataset.v = to;
+  if(reduce || from === to){ el.textContent = fmt(to); return; }
+  const t0 = performance.now(), d = dur || 650;
+  (function f(t){
+    const k = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmt(from + (to - from) * e);
+    if(k < 1) requestAnimationFrame(f);
+  })(t0);
+}
+
+/* hero price count-up */
+(function(){
+  const el = $("heroPrice"); if(reduce) return;
+  el.dataset.v = 0; el.textContent = "₱0";
+  setTimeout(() => tween(el, 750000, peso, 1400), 500);
+})();
+/* hero phone receipt counter, in time with the toast */
+if(!reduce){
+  let rc = 38;
+  setTimeout(() => { setInterval(() => { rc = rc >= 44 ? 38 : rc + 1; $("rcCount").textContent = rc; }, 6000); $("rcCount").textContent = ++rc; }, 2600);
+}
+
+/* glossary */
+const terms = {
+  BIR:["BIR","The Bureau of Internal Revenue, the Philippine government office that collects taxes."],
+  "2307":["Form 2307","The form hospitals and clinics give when they withhold tax from a professional's fee. Clients use it to lower the tax they still have to pay."],
+  VAT:["VAT-registered","Registered to charge 12% value-added tax. This is usually required once yearly sales go over ₱3 million."],
+  DPO:["Data Protection Officer","The person responsible for keeping clients' personal data safe, as required by the Philippine Data Privacy Act."]
+};
+const pop = $("pop"); let popFor = null;
+function hidePop(){ pop.hidden = true; popFor = null; }
+function showPop(btn){
+  const t = terms[btn.dataset.term]; if(!t) return;
+  pop.innerHTML = "<b></b><span></span>";
+  pop.querySelector("b").textContent = t[0];
+  pop.querySelector("span").textContent = t[1];
+  pop.hidden = false; popFor = btn;
+  const r = btn.getBoundingClientRect(), w = Math.min(300, window.innerWidth - 24);
+  pop.style.maxWidth = w + "px";
+  pop.style.left = Math.max(12, Math.min(r.left + scrollX, scrollX + innerWidth - w - 12)) + "px";
+  pop.style.top = (r.bottom + scrollY + 8) + "px";
+}
+document.addEventListener("click", e => {
+  const t = e.target.closest(".term");
+  if(t){ e.preventDefault(); e.stopPropagation(); popFor === t ? hidePop() : showPop(t); return; }
+  if(!e.target.closest("#pop")) hidePop();
+});
+document.addEventListener("keydown", e => { if(e.key === "Escape") hidePop(); });
+
+/* contents + scroll spy */
+const chapters = [...document.querySelectorAll(".chapter")];
+chapters.forEach((c,i) => {
+  const html = `<li><a href="#${c.id}" data-id="${c.id}"><span>${i+1}</span>${c.dataset.title}</a></li>`;
+  $("railList").insertAdjacentHTML("beforeend", html);
+  $("drawerList").insertAdjacentHTML("beforeend", html);
+});
+$("drawerBtn").addEventListener("click", () => {
+  const open = $("drawer").hidden; $("drawer").hidden = !open; $("drawerBtn").setAttribute("aria-expanded", open);
+});
+$("drawerList").addEventListener("click", e => { if(e.target.closest("a")){ $("drawer").hidden = true; $("drawerBtn").setAttribute("aria-expanded", false); }});
+function onScroll(){
+  const h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+  $("progressBar").style.width = (max > 0 ? h.scrollTop / max * 100 : 0) + "%";
+  let current = null;
+  chapters.forEach(c => { if(c.getBoundingClientRect().top <= 140) current = c; });
+  $("nowTitle").textContent = current ? current.dataset.title : "Overview";
+  const ci = current ? chapters.indexOf(current) : -1;
+  document.querySelectorAll(".rail a").forEach(a => {
+    const idx = chapters.findIndex(c => c.id === a.dataset.id);
+    a.classList.toggle("on", idx === ci);
+    a.classList.toggle("seen", idx < ci);
+  });
+}
+addEventListener("scroll", () => { onScroll(); if(!pop.hidden) hidePop(); }, {passive:true});
+onScroll();
+
+/* reveal on scroll */
+const revealCbs = new Map();
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); const cb = revealCbs.get(e.target); if(cb) cb(); }
+}), {threshold:.18}) : null;
+document.querySelectorAll("[data-reveal]").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+
+/* print */
+function doPrint(){ document.querySelectorAll("details").forEach(d => d.open = true); print(); }
+$("printBtn").addEventListener("click", doPrint);
+$("printBtn2").addEventListener("click", doPrint);
+addEventListener("beforeprint", () => document.querySelectorAll("details").forEach(d => d.open = true));
+
+/* ================= FLOW ================= */
+const D = s => `style="--d:${s}s"`;
+const laneName = {client:"The client", app:"The Tax MD app (automatic)", team:"Your team"};
+const rcpt = (big, scan) => `<div class="rcpt${big?" big":""}"><b>Southside Pharmacy</b><i></i><i></i><i class="s"></i><i></i><i class="s"></i><em>₱1,245.00</em>${scan?`<span class="scanline" ${D(.15)}></span>`:""}</div>`;
+const steps = [
+  {lane:"client", tok:"New account", t:"Sign up", s:"With an email code",
+   d:"On the website or the phone app, using a one-time email code instead of a password. Nothing to remember.",
+   sc:()=>`<div class="sc-card"><small class="a-up">Enter the 6-digit code we emailed you</small><div class="otp">${[4,8,2,9,1,6].map((n,i)=>`<i class="a-pop" ${D(.35+i*.16)}>${n}</i>`).join("")}</div><div class="pill ok a-up" ${D(1.45)}>${CHECK}Signed in, no password needed</div></div>`},
+  {lane:"team", tok:"New account", t:"Approve the new client", s:"Assign a staff member",
+   d:"Your team approves the sign-up and assigns the client to a staff member who will handle their taxes.",
+   sc:()=>`<div class="sc-card"><small class="a-up">New sign-ups</small><div class="person a-up" ${D(.15)}><span class="av">MR</span><div><b>Dr. Maria Reyes</b><small>Pediatrician</small></div><span class="mini-btn" ${D(.9)}><span class="rp" ${D(.9)}></span>${CHECK}Approve</span></div><div class="assign a-up" ${D(1.5)}><span class="av sm">AN</span>Assigned to <b>Ana, tax staff</b></div></div>`},
+  {lane:"client", tok:"New account", t:"Pick a plan and pay", s:"Card or e-wallet",
+   d:"The client chooses a plan and pays online by card or e-wallet, right inside the app.",
+   sc:()=>`<div class="sc-card"><small class="a-up">Choose a plan</small><div class="plans"><span class="a-up" ${D(.2)}>Starter<b>₱899</b></span><span class="pk">Standard<b>₱2,899</b></span><span class="a-up" ${D(.5)}>Premium<b>₱3,500</b></span></div><div class="paybar a-up" ${D(1.4)}><span>Card ending 4821</span><b>Paid ₱2,899</b></div></div>`},
+  {lane:"client", tok:"Receipt", t:"Snap receipt photos", s:"Anytime, from the phone",
+   d:"One big Upload button. Clients photograph receipts one or many at a time. Receipts are most of what they send; 2307 forms come in a few times a year.",
+   sc:()=>`<div class="snap"><div class="vf"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i>${rcpt()}<div class="flash" ${D(.7)}></div></div><div class="thumbs"><div><span class="a-pop" ${D(1)}></span><span class="a-pop" ${D(1.25)}></span><span class="a-pop" ${D(1.5)}></span></div><b class="a-up" ${D(1.8)}>3 receipts uploaded</b></div></div>`},
+  {lane:"app", tok:"Receipt", t:"AI reads each receipt", s:"Date, store, amount",
+   d:"The app reads every photo and fills in the date, store, amount and category automatically, so nobody types it in by hand.",
+   sc:()=>`<div class="ai">${rcpt(true,true)}<div class="fields">${[["Date","Oct 3, 2026"],["Store","Southside Pharmacy"],["Amount","₱1,245.00"],["Category","Medical supplies"]].map((f,i)=>`<div class="fld a-up" ${D(.5+i*.3)}><small>${f[0]}</small><b>${f[1]}</b></div>`).join("")}</div></div>`},
+  {lane:"team", tok:"Receipt", t:"Check the amounts", s:"Match 2307s, export Excel",
+   d:"Staff review what the app read on a spreadsheet-style screen, fix anything off, match 2307s with invoices (the app flags anything missing) and export to Excel if needed.",
+   sc:()=>`<div class="sc-card sheet"><div class="r h a-up"><span>Receipt</span><span>Amount</span><span></span></div>${[["Southside Pharmacy","₱1,245.00"],["Clinic rent","₱18,000.00"],["Medical books","₱2,350.00"]].map((r,i)=>`<div class="r a-up" ${D(.15+i*.12)}><span>${r[0]}</span><b>${r[1]}</b><span class="tick a-pop" ${D(.7+i*.25)}>${CHECK}</span></div>`).join("")}<span class="pill ok a-up" ${D(1.5)}>${CHECK}2307 matched to invoice</span> <span class="pill a-up" ${D(1.75)}>Export to Excel</span></div>`},
+  {lane:"app", tok:"Records", t:"Update the dashboard", s:"And send deadline reminders",
+   d:"The client's dashboard shows income per quarter, tax withheld and missing documents. Reminders go out by push notification, in-app alert and email before every BIR deadline.",
+   sc:()=>`<div class="notif a-down" ${D(1.3)}><span class="bi">${BELL}</span><div><b>BIR deadline in 7 days</b>Quarterly income tax, due Nov 15</div></div><div class="sc-card dash"><small>Income per quarter</small><div class="bars">${[48,66,84,30].map((h,i)=>`<i class="a-grow" style="height:${h}%;--d:${.2+i*.15}s"></i>`).join("")}</div><div class="ql"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div></div>`},
+  {lane:"team", tok:"Tax return", t:"Prepare the tax return", s:"Based on checked records",
+   d:"Your team prepares the return from the records they've already checked, then sends it to the client for approval.",
+   sc:()=>`<div class="sc-card"><small class="a-up">Quarterly income tax return</small><div class="doc-lines">${[100,82,94,60,88].map((w,i)=>`<i class="a-widen" style="width:${w}%;--d:${.2+i*.18}s"></i>`).join("")}</div><div class="prog"><i class="a-widen" style="width:100%;--d:.2s;animation-duration:1.4s"></i></div><span class="pill ok a-up" ${D(1.6)}>${CHECK}Ready for client approval</span></div>`},
+  {lane:"app", tok:"Tax return", t:"Notify the client", s:"\u201CYour return is ready\u201D",
+   d:"The client gets a notification that their tax return is ready to review.",
+   sc:()=>`<div class="lock"><div class="t a-up">9:41</div><small class="a-up" ${D(.1)}>Monday, October 12</small><div class="notif a-down" ${D(.6)}><span class="bi blue">${BELL}</span><div><b>Tax MD</b>Your return is ready. Tap to review.</div></div></div>`},
+  {lane:"client", tok:"Tax return", t:"Tap Approve", s:"One tap in the app",
+   d:"The client reviews the return and approves it with a single tap.",
+   sc:()=>`<div class="sc-card"><small class="a-up">Q3 income tax return</small><div class="sum-row a-up" ${D(.1)}><span>Income this quarter</span><b>₱412,000</b></div><div class="sum-row a-up" ${D(.2)}><span>Tax withheld (2307s)</span><b>₱18,450</b></div><div class="sum-row a-up" ${D(.3)}><span>Tax still due</span><b>₱4,820</b></div><div style="display:flex;justify-content:flex-end;margin-top:10px"><span class="mini-btn" ${D(1)}><span class="rp" ${D(1)}></span>${CHECK}Approve</span></div></div>`},
+  {lane:"team", tok:"Proof of filing", t:"File with the BIR", s:"Upload the proof",
+   d:"Your team files the return with the BIR and uploads the proof of filing and payment to the app.",
+   sc:()=>`<div class="sc-card" style="position:relative"><small class="a-up">Q3 income tax return</small><div class="doc-lines"><i style="width:100%"></i><i style="width:80%"></i><i style="width:92%"></i><i style="width:56%"></i></div><span class="stamp" ${D(.6)}>Filed</span><span class="pill ok a-up" ${D(1.3)}>${CHECK}Proof uploaded</span></div>`},
+  {lane:"app", tok:"Proof of filing", t:"Save the proof", s:"\u201CYour tax is filed\u201D",
+   d:"The proof is saved in the client's account, where they can view and download it anytime. Then the cycle starts again from step 4 next tax period.",
+   sc:()=>`<div class="save"><div class="folder"><div class="tab"></div><div class="back"></div><div class="paper" ${D(.2)}><i></i><i></i><i style="width:60%"></i></div><div class="front"></div></div><div class="bigcheck a-pop" ${D(1)}>${CHECK}</div><b class="a-up" ${D(1.2)}>Your tax is filed</b></div>`}
+];
+
+const scrub = $("scrub"), lanesEl = $("lanes"), token = $("token"), trail = $("trailPath");
+steps.forEach((s,i) => {
+  const b = document.createElement("button");
+  b.className = "dot"; b.type = "button"; b.dataset.lane = s.lane; b.textContent = i+1;
+  b.setAttribute("aria-label", `Step ${i+1}: ${s.t} (${laneName[s.lane]})`);
+  b.addEventListener("click", () => { playBtn.dataset.started = 1; stopPlay(); go(i); });
+  scrub.appendChild(b);
+});
+const lanes = {}; document.querySelectorAll(".lane").forEach(l => lanes[l.dataset.lane] = l);
+let cur = -1, timer = null, tokPos = null;
+const STEP_MS = 4600;
+
+function tokTarget(lane){
+  const lr = lanesEl.getBoundingClientRect(), card = lanes[lane].querySelector(".lane-card").getBoundingClientRect();
+  const tw = token.offsetWidth, th = token.offsetHeight;
+  if(innerWidth <= 720){ const ln = lanes[lane].getBoundingClientRect(); return {x: ln.right - lr.left - tw - 14, y: ln.top - lr.top - th/2}; }
+  return {x: card.left - lr.left + card.width/2 - tw/2, y: card.top - lr.top - th - 6};
+}
+function moveToken(lane, animate){
+  const to = tokTarget(lane), from = tokPos || to;
+  tokPos = to;
+  const end = `translate(${to.x}px,${to.y}px)`;
+  if(!animate || reduce || (from.x === to.x && from.y === to.y)){ token.style.transform = end; trail.setAttribute("d",""); return; }
+  const tw = token.offsetWidth/2, th = token.offsetHeight/2;
+  const vertical = Math.abs(to.x - from.x) < 40;
+  const mx = (from.x + to.x)/2 + (vertical ? -70 : 0), my = vertical ? (from.y + to.y)/2 : Math.min(from.y, to.y) - 60;
+  token.animate([
+    {transform:`translate(${from.x}px,${from.y}px) scale(1)`},
+    {transform:`translate(${mx}px,${my}px) scale(1.12)`, offset:.5},
+    {transform:end+" scale(1)"}
+  ], {duration:850, easing:"cubic-bezier(.45,0,.2,1)"});
+  token.style.transform = end;
+  trail.setAttribute("d", `M${from.x+tw} ${from.y+th} Q${mx+tw} ${my+th} ${to.x+tw} ${to.y+th}`);
+  const len = trail.getTotalLength();
+  trail.style.strokeDasharray = `${len}`;
+  trail.animate([
+    {strokeDashoffset:len, opacity:.9},
+    {strokeDashoffset:0, opacity:.9, offset:.55},
+    {strokeDashoffset:0, opacity:0}
+  ], {duration:1500, easing:"ease-out", fill:"forwards"});
+}
+
+function go(i, animate = true){
+  const prev = cur;
+  cur = Math.max(0, Math.min(steps.length-1, i));
+  const s = steps[cur];
+  Object.entries(lanes).forEach(([k,el]) => {
+    const card = el.querySelector(".lane-card");
+    el.classList.toggle("active", k === s.lane);
+    if(k === s.lane){ card.innerHTML = `<b>${cur+1}. ${s.t}</b>${s.s}`; card.style.animation="none"; void card.offsetWidth; card.style.animation=""; }
+    else {
+      let last = -1; for(let j = cur-1; j >= 0; j--) if(steps[j].lane === k){ last = j; break; }
+      card.innerHTML = last >= 0 ? `<b>Done: ${steps[last].t}</b>Waiting for the next turn` : `<b>Nothing yet</b>Joins in later`;
+    }
+  });
+  [...scrub.querySelectorAll(".dot")].forEach((d,j) => {
+    d.classList.toggle("past", j < cur);
+    j === cur ? d.setAttribute("aria-current","step") : d.removeAttribute("aria-current");
+  });
+  $("scrubFill").style.width = (cur/11*100) + "%";
+  $("tokenLabel").textContent = s.tok;
+  moveToken(s.lane, animate && prev !== -1);
+  $("dWho").textContent = `Step ${cur+1} of 12: ${laneName[s.lane]}`;
+  $("dTitle").textContent = s.t;
+  $("dText").textContent = s.d;
+  const n = steps[cur+1];
+  $("dNext").textContent = n ? `Next: ${laneName[n.lane].replace(" (automatic)","")}, ${n.t.toLowerCase()}.` : "Next tax period, it starts again from step 4.";
+  const scene = $("scene"); scene.innerHTML = s.sc();
+  ["dTitle","dText"].forEach(id => { const el = $(id); el.classList.remove("swap"); void el.offsetWidth; el.classList.add("swap"); });
+  const tm = $("timer"); tm.classList.remove("run"); void tm.offsetWidth;
+  if(timer) { tm.style.setProperty("--dur", STEP_MS + "ms"); tm.classList.add("run"); }
+  setPlayIcon();
+}
+const playBtn = $("playBtn");
+const ICO = {
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+  again:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5"/></svg>'
+};
+function setPlayIcon(){
+  const end = cur === steps.length-1;
+  playBtn.innerHTML = timer ? ICO.pause : (end ? ICO.again : ICO.play);
+  playBtn.setAttribute("aria-label", timer ? "Pause" : (end ? "Play again from the start" : "Play the flow"));
+}
+function stopPlay(){ if(timer){ clearInterval(timer); timer = null; $("timer").classList.remove("run"); setPlayIcon(); } }
+function startPlay(fromCurrent){
+  playBtn.dataset.started = 1;
+  if(cur === steps.length-1){ cur = 0; fromCurrent = true; }
+  timer = setInterval(() => { if(cur >= steps.length-1){ stopPlay(); return; } go(cur+1); }, STEP_MS);
+  go(fromCurrent ? cur : cur+1);
+}
+playBtn.addEventListener("click", () => timer ? stopPlay() : startPlay(cur === 0 && !playBtn.dataset.started));
+$("prevBtn").addEventListener("click", () => { playBtn.dataset.started = 1; stopPlay(); go(cur-1); });
+$("nextBtn").addEventListener("click", () => { playBtn.dataset.started = 1; stopPlay(); go(cur+1); });
+$("flowBox").addEventListener("keydown", e => {
+  if(e.key === "ArrowRight"){ stopPlay(); go(cur+1); e.preventDefault(); }
+  if(e.key === "ArrowLeft"){ stopPlay(); go(cur-1); e.preventDefault(); }
+});
+addEventListener("resize", () => { hidePop(); if(cur >= 0){ tokPos = null; moveToken(steps[cur].lane, false); } });
+go(0, false);
+/* start playing on its own the first time the flow comes into view */
+revealCbs.set($("flowBox"), () => { if(!reduce) setTimeout(() => { if(!timer && !playBtn.dataset.started && cur === 0) startPlay(true); }, 700); });
+if(document.fonts) document.fonts.ready.then(() => { tokPos = null; moveToken(steps[cur].lane, false); });
+
+/* ================= FEATURES ================= */
+const feats = [
+  {k:"clients", name:"For clients", where:"On the website, iPhone app and Android app", items:[
+    "Sign up and log in with an email code, no password to remember",
+    "Simple home screen: one big \u201CUpload\u201D button and the next deadline",
+    "Snap receipts straight from the phone camera, one or many at a time",
+    "Dashboard with income per quarter, tax withheld and missing documents",
+    "Tax estimate on the dashboard, using rules you approve",
+    "Push notifications, in-app alerts and emails before deadlines",
+    "Approve tax returns with one tap",
+    "View and download all filed returns and proof of payment",
+    "Pay for their plan online by card or e-wallet",
+    "\u201CMessage us\u201D button that opens your Messenger or Viber"]},
+  {k:"team", name:"For your team", where:"On the website", items:[
+    "Approve new clients and assign them to staff",
+    "Work list showing which clients need action",
+    "AI reads each receipt (date, store, amount, category) and each 2307",
+    "Spreadsheet-style screen to check and fix amounts",
+    "Automatic 2307 and invoice matching, with warnings",
+    "One-click export to Excel",
+    "BIR deadline calendar for every client",
+    "Upload filed returns and proof of payment",
+    "Client list, plans and payment status",
+    "Reports: number of clients, income and workload",
+    "Send announcements to all clients at once",
+    "History of who changed what, for every record"]},
+  {k:"stores", name:"Website and app stores", where:"Where people find and download Tax MD", items:[
+    "Tax MD website with plans, FAQs and a contact form",
+    "iPhone app published on the Apple App Store",
+    "Android app published on Google Play",
+    "We handle the app store submissions and reviews"]},
+  {k:"safety", name:"Safety and security", where:"Built in from day one", items:[
+    "Each client can only see their own records",
+    "Two-step login for your staff",
+    "Daily backups, tested before launch",
+    "Encrypted data and private file links",
+    "Error and downtime alerts for our team",
+    "Free bug fixes for 30 days after launch"]}
+];
+const tabsEl = $("featTabs"), panelsEl = $("featPanels");
+feats.forEach((f,i) => {
+  tabsEl.insertAdjacentHTML("beforeend", `<button class="tab" role="tab" id="tab-${f.k}" aria-controls="panel-${f.k}" aria-selected="${i===0}" tabindex="${i===0?0:-1}">${f.name}<em>${f.items.length}</em></button>`);
+  panelsEl.insertAdjacentHTML("beforeend", `<div class="panel" role="tabpanel" id="panel-${f.k}" aria-labelledby="tab-${f.k}" ${i?"hidden":""}><p>${f.where}</p><ul class="ticks">${f.items.map((x,j)=>`<li style="--i:${j}">${x}</li>`).join("")}</ul></div>`);
+});
+const tabBtns = [...tabsEl.querySelectorAll(".tab")], ind = $("tabInd");
+function placeInd(i){ const b = tabBtns[i]; ind.style.width = b.offsetWidth + "px"; ind.style.transform = `translateX(${b.offsetLeft}px)`; }
+function selTab(i, focus){
+  tabBtns.forEach((b,j) => {
+    b.setAttribute("aria-selected", i===j); b.tabIndex = i===j?0:-1;
+    const p = $(b.getAttribute("aria-controls")); p.hidden = i!==j; p.classList.remove("show");
+    if(i===j){ void p.offsetWidth; p.classList.add("show"); }
+  });
+  placeInd(i);
+  if(focus) tabBtns[i].focus();
+}
+tabBtns.forEach((b,i) => {
+  b.addEventListener("click", () => selTab(i));
+  b.addEventListener("keydown", e => {
+    if(e.key==="ArrowRight"){ selTab((i+1)%tabBtns.length, true); e.preventDefault(); }
+    if(e.key==="ArrowLeft"){ selTab((i-1+tabBtns.length)%tabBtns.length, true); e.preventDefault(); }
+  });
+});
+placeInd(0);
+addEventListener("resize", () => placeInd(tabBtns.findIndex(b => b.getAttribute("aria-selected")==="true")));
+if(document.fonts) document.fonts.ready.then(() => placeInd(tabBtns.findIndex(b => b.getAttribute("aria-selected")==="true")));
+
+/* ================= MONTHS ================= */
+const months = [
+  {build:"Map your process, design the screens, set up login and signup, and create the Tax MD brand.", see:"Screen designs, working signup and login, and the Tax MD brand kit."},
+  {build:"Document upload, AI reading, the staff review screen and Excel export.", see:"Uploads, AI reading and the staff review screen working."},
+  {build:"Client dashboard, reminders, 2307 matching, approvals and online payment.", see:"Dashboard, reminders, approvals and online payment working."},
+  {build:"iPhone and Android apps, team reports, and the Tax MD website.", see:"iPhone and Android test apps, team reports and the website."},
+  {build:"Testing with real clients, security checks, app store release and staff training.", see:"Live on web, App Store and Google Play; your staff trained."}
+];
+const monthsEl = $("months");
+months.forEach((m,i) => {
+  monthsEl.insertAdjacentHTML("beforeend", `<button class="mo" role="tab" type="button" aria-selected="${i===0}" tabindex="${i===0?0:-1}"><i>${i+1}</i><b>Month ${i+1}</b></button>`);
+  $("moPrintBody").insertAdjacentHTML("beforeend", `<tr><td>Month ${i+1}</td><td>${m.build}</td><td class="num">₱150,000</td><td>${m.see}</td></tr>`);
+});
+$("moPrintBody").insertAdjacentHTML("beforeend", `<tr class="total"><td>Total</td><td></td><td class="num">₱750,000</td><td>The app and its code become yours after the last payment</td></tr>`);
+const moBtns = [...monthsEl.querySelectorAll(".mo")];
+let moIdx = 0;
+function selMonth(i, focus){
+  const prevPaid = (moIdx+1)*20; moIdx = i;
+  moBtns.forEach((b,j) => { b.setAttribute("aria-selected", i===j); b.tabIndex = i===j?0:-1; b.classList.toggle("done", j<i); });
+  if(focus) moBtns[i].focus();
+  $("monthFill").style.width = (i/4*80) + "%";
+  const m = months[i];
+  $("moPanel").innerHTML = `
+    <div class="swap"><small>What we build in Month ${i+1}</small>${m.build}</div>
+    <div class="pay swap"><small>You pay at the start</small><strong>₱150,000</strong><span><b id="paidSoFar"></b> of ₱750,000 paid so far</span><div class="paid-bar"><i style="width:${prevPaid}%"></i></div></div>
+    <div class="swap"><small>What you see at the end of the month</small>${m.see}</div>`;
+  const ps = $("paidSoFar"); ps.dataset.v = prevPaid/20*150000; tween(ps, (i+1)*150000, peso);
+  requestAnimationFrame(() => requestAnimationFrame(() => { const bar = document.querySelector(".paid-bar i"); if(bar) bar.style.width = (i+1)*20 + "%"; }));
+  $("moNote").innerHTML = i===4 ? `<p class="mo-note swap">${CHECK.replace("<svg",'<svg width="18" height="18"')}After this last payment, the app and its code become yours.</p>` : "";
+}
+moBtns.forEach((b,i) => {
+  b.addEventListener("click", () => selMonth(i));
+  b.addEventListener("keydown", e => {
+    if(e.key==="ArrowRight"){ selMonth(Math.min(4,i+1), true); e.preventDefault(); }
+    if(e.key==="ArrowLeft"){ selMonth(Math.max(0,i-1), true); e.preventDefault(); }
+  });
+});
+selMonth(0);
+
+/* ================= MONEY ================= */
+const tools = [
+  ["AI coding assistants (4 users)","Helps the team write, check and fix code faster",12500],
+  ["GitHub Enterprise (4 users)","Stores the app's code safely, tracks every change, and runs automatic checks",5200],
+  ["Figma Professional (1 designer + 3 developer seats)","Designing the screens, app icons and store images",4000],
+  ["Higgsfield (AI image and video studio)","Product visuals and promo videos for the free branding kit and social media launch kit",3000],
+  ["Test servers, database and storage","A safe copy of the app to test on before going live",2800],
+  ["Apple and Google developer accounts","Required to publish on the App Store and Google Play (first year)",1500],
+  ["Team tools and device testing","Task tracking, team chat and testing on different phones",1000]
+];
+$("toolTable").innerHTML = tools.map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td><td class="num">${peso(t[2])}</td></tr>`).join("") + `<tr class="total"><td colspan="2">Total per month</td><td class="num">₱30,000</td></tr>`;
+const segs = [
+  {cls:"d1", name:"Developer 1", job:"Project lead, design and overall build"},
+  {cls:"d2", name:"Developer 2", job:"Database, security and AI document reading"},
+  {cls:"d3", name:"Developer 3", job:"iPhone and Android apps"},
+  {cls:"d4", name:"Developer 4", job:"Team screens, website and testing"},
+  {cls:"tl", name:"Dev tools", job:"The subscriptions and services the team pays for while building"}
+];
+let mode = "total", seg = 0;
+const splitbar = $("splitbar");
+segs.forEach((s,i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "sg " + s.cls; b.style.setProperty("--i", i);
+  b.addEventListener("click", () => { seg = i; renderSplit(true); });
+  splitbar.appendChild(b);
+});
+function renderSplit(anim){
+  const each = mode === "total" ? 150000 : 30000;
+  tween($("splitTotal"), each*5, peso);
+  $("splitLabel").textContent = mode === "total" ? "Total over 5 months" : "Every month, for 5 months";
+  tween($("devSum"), each*4, peso); tween($("toolSum"), each, peso);
+  [...splitbar.children].forEach((b,i) => {
+    b.innerHTML = `<b>${segs[i].name}</b><span>${peso(each)}</span>`;
+    b.setAttribute("aria-pressed", i === seg);
+    b.setAttribute("aria-label", `${segs[i].name}, ${peso(each)}. Show details`);
+  });
+  const s = segs[seg], unit = mode === "total" ? "over 5 months" : "per month";
+  let html = `<h3>${s.name} <span class="amt">${peso(each)}</span> <span class="muted small">${unit}</span></h3>`;
+  html += seg < 4 ? `<p style="margin:0">${s.job}. That's ₱30,000 a month, so they can work on Tax MD full-time for all 5 months.</p>`
+    : `<p class="small muted" style="margin:0">${s.job}. Approximate monthly prices at about ₱62 per US dollar:</p><ul class="tool-list">` +
+      tools.map((t,i) => `<li style="--i:${i}"><div>${t[0]}<small>${t[1]}</small></div><b>${peso(mode==="total"?t[2]*5:t[2])}</b></li>`).join("") + `</ul>`;
+  const d = $("segDetail"); d.innerHTML = html;
+  if(anim){ d.classList.remove("swap"); void d.offsetWidth; d.classList.add("swap"); }
+}
+document.querySelectorAll(".seg-toggle button").forEach(b => b.addEventListener("click", () => {
+  mode = b.dataset.mode;
+  document.querySelectorAll(".seg-toggle button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  renderSplit(true);
+}));
+renderSplit(false);
+
+/* ================= RUNNING COSTS ================= */
+const counts = [50,100,250,500,1000];
+const costRows = [
+  ["AI receipt reading",[320,640,1600,3200,6400]],
+  ["Database and receipt storage",[1550,1550,1550,2600,4800]],
+  ["Website and app hosting",[1250,1250,1250,1250,2500]],
+  ["Emails and push notifications",[0,0,0,1250,1250]],
+  ["Error alerts and monitoring",[0,0,0,1600,1600]],
+  ["Domain name taxmd.ph (₱2,630/year)",[220,220,220,220,220]],
+  ["Apple yearly fee, split per month",[510,510,510,510,510]]
+];
+const receipts = [1600,3200,8000,16000,32000], totals = [3850,4170,5130,10630,17280], perClient = [77,42,21,21,17];
+const PAYS = 12236/12;
+counts.forEach((c,i) => $("costChips").insertAdjacentHTML("beforeend", `<button class="chip" type="button" aria-pressed="${i===1}">${c.toLocaleString("en-US")} clients</button>`));
+const chipBtns = [...$("costChips").children];
+$("compare").innerHTML = `
+  <div class="cmp"><span>Cost to serve one client</span><b><span id="cpc">₱42</span><span style="font-size:.9rem;font-weight:700">/month</span></b><div class="cbar"><i id="cpcBar"></i></div></div>
+  <div class="cmp"><span>What the average client pays you</span><b>about ₱1,020<span style="font-size:.9rem;font-weight:700">/month</span></b><div class="cbar"><i style="width:100%"></i></div></div>
+  <p id="cmpText"></p>`;
+function selCost(i){
+  chipBtns.forEach((b,j) => b.setAttribute("aria-pressed", i===j));
+  $("costList").innerHTML =
+    `<div class="li" style="--i:0"><span>Receipts read per month</span><span>${receipts[i].toLocaleString("en-US")}</span></div>` +
+    costRows.map((r,k) => `<div class="li" style="--i:${k+1}"><span>${r[0]}</span><span class="${r[1][i]?"":"z"}">${r[1][i]?peso(r[1][i]):"Free tier"}</span></div>`).join("") +
+    `<div class="li tot" style="--i:9"><span>Total per month</span><span>${peso(totals[i])}</span></div>`;
+  tween($("cpc"), perClient[i], peso);
+  $("cpcBar").style.width = Math.max(2, perClient[i]/PAYS*100) + "%";
+  $("cmpText").textContent = `At ${counts[i].toLocaleString("en-US")} clients, running the app takes about ${Math.round(perClient[i]/PAYS*1000)/10}% of what each client pays. The more clients you have, the cheaper each one is to serve.`;
+}
+chipBtns.forEach((b,i) => b.addEventListener("click", () => selCost(i)));
+selCost(1);
+$("costTable").innerHTML =
+  `<thead><tr><th>What it pays for</th>${counts.map(c=>`<th class="num">${c.toLocaleString("en-US")}</th>`).join("")}</tr></thead><tbody>` +
+  `<tr><td>Receipts read per month</td>${receipts.map(v=>`<td class="num">${v.toLocaleString("en-US")}</td>`).join("")}</tr>` +
+  costRows.map(r=>`<tr><td>${r[0]}</td>${r[1].map(v=>`<td class="num">${peso(v)}</td>`).join("")}</tr>`).join("") +
+  `<tr class="total"><td>Total per month</td>${totals.map(v=>`<td class="num">${peso(v)}</td>`).join("")}</tr>` +
+  `<tr><td><strong>Cost per client, per month</strong></td>${perClient.map(v=>`<td class="num"><strong>${peso(v)}</strong></td>`).join("")}</tr></tbody>`;
+
+/* ================= CALCULATOR ================= */
+const cC = $("cClients"), cS = $("cStarter"), cP = $("cPremium");
+function runCost(n){
+  if(n <= 250) return 3530 + 6.4*n;
+  const pts = [[250,5130],[500,10630],[1000,17280]];
+  for(let k=0;k<pts.length-1;k++){ const [a,av]=pts[k],[b,bv]=pts[k+1]; if(n<=b) return av+(bv-av)*(n-a)/(b-a); }
+  return 17280;
+}
+function calc(src){
+  let s = +cS.value, p = +cP.value;
+  if(s + p > 100){ if(src === cS){ p = 100 - s; cP.value = p; } else { s = 100 - p; cS.value = s; } }
+  const sd = 100 - s - p, n = +cC.value;
+  const avg = Math.round((s*3596 + sd*11596 + p*42000)/100);
+  const year = avg*n, month = year/12, run = runCost(n), net = month - run;
+  $("oClients").textContent = n.toLocaleString("en-US");
+  $("oStarter").textContent = s + "%"; $("oPremium").textContent = p + "%";
+  $("lSt").textContent = s + "%"; $("lSd").textContent = sd + "%"; $("lPr").textContent = p + "%";
+  $("mSt").style.width = s + "%"; $("mSd").style.width = sd + "%"; $("mPr").style.width = p + "%";
+  tween($("oYear"), year, peso, 450);
+  $("oMonth").textContent = `about ${peso(Math.round(month/1000)*1000)} a month`;
+  tween($("oAvg"), avg, v => peso(v) + "/yr", 450);
+  tween($("oRun"), Math.round(run/10)*10, v => peso(v) + "/mo", 450);
+  const need = Math.ceil(750000/avg);
+  let pb;
+  if(net <= 0) pb = "At this size, the app costs more to run than it earns. Try more clients.";
+  else { const m = 750000/net; pb = m <= 12 ? `Earns back the ₱750,000 in about <b>${Math.max(1,Math.ceil(m))} months</b> after launch.` : `Earns back the ₱750,000 in about <b>${(m/12).toFixed(1)} years</b> after launch.`; }
+  $("oPayback").innerHTML = `${pb}<br><span style="color:#A9BBDD">With this plan mix, about ${need} clients for one year earn back the ₱750,000.</span>`;
+}
+[cC,cS,cP].forEach(el => el.addEventListener("input", () => calc(el)));
+$("calcReset").addEventListener("click", () => { cC.value=100; cS.value=30; cP.value=10; calc(); });
+calc();
+
+/* ================= CHECKLIST ================= */
+const KEY = "taxmd-proposal-checklist";
+let saved = {}; try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ saved = {}; }
+const boxes = [...document.querySelectorAll("#checklist input")];
+function countChecks(){
+  const n = boxes.filter(b=>b.checked).length;
+  $("checkCount").textContent = `${n} of ${boxes.length} done`;
+  $("checkBar").style.width = (n/boxes.length*100) + "%";
+}
+boxes.forEach(b => {
+  b.checked = !!saved[b.dataset.k];
+  b.addEventListener("change", () => { saved[b.dataset.k] = b.checked; try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e){} countChecks(); });
+});
+countChecks();
+})();
+</script>
+</body>
+</html>
